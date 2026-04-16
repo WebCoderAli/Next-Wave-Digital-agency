@@ -1,0 +1,233 @@
+/* ==============================================================
+   THEME TOGGLE SYSTEM (LIGHT MODE OVERRIDES)
+   ============================================================== */
+
+/* GLOBAL BASE */
+body.light-mode {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.light-mode .premium-wrapper,
+body.light-mode .index-page-wrapper {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6 {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+/* NAVBAR ADJUSTMENTS */
+body.light-mode .navbar-premium,
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+body.light-mode .navbar-brand.brand-premium {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+body.light-mode .nav-link-premium {
+    color: #333333 !important;
+    font-weight: 700 !important;
+}
+body.light-mode .nav-link-premium:hover, 
+body.light-mode .nav-link-premium.active {
+    color: #000000 !important;
+}
+
+/* Mobile Menu Light Mode Overrides */
+@media (max-width: 991.98px) {
+    body.light-mode .navbar-collapse {
+        background: #ffffff !important;
+        border: 1px solid rgba(0,0,0,0.1) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+    body.light-mode .nav-link-premium {
+        background: rgba(0, 0, 0, 0.03) !important;
+        color: #333333 !important;
+    }
+    body.light-mode .nav-link-premium:hover {
+        background: rgba(0, 0, 0, 0.06) !important;
+        color: #000000 !important;
+    }
+}
+
+/* GLASS CARDS */
+body.light-mode .glass-card,
+body.light-mode .card {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+    color: #000000 !important;
+}
+body.light-mode .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 1) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1), 0 0 25px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* ADMIN PORTAL EXTENSION */
+body.light-mode .admin-sidebar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-right: 1px solid rgba(0,0,0,0.06) !important;
+    color: #000000 !important;
+}
+body.light-mode .sidebar-header h4 {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+body.light-mode .sidebar-menu a {
+    color: #475569 !important;
+}
+body.light-mode .sidebar-menu a:hover {
+    background: rgba(0,0,0,0.05) !important;
+    color: #000000 !important;
+}
+body.light-mode .sidebar-menu a.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2) !important;
+}
+body.light-mode .sidebar-header {
+    border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+body.light-mode .sidebar-footer {
+    border-top: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+/* TEXT COLOR UTILITIES OVERRIDE */
+body.light-mode .text-white {
+    color: #000000 !important; 
+    font-weight: 700 !important;
+}
+body.light-mode .text-secondary,
+body.light-mode .text-muted {
+    color: #333333 !important;
+    font-weight: 600 !important;
+}
+body.light-mode .text-light {
+    color: #111111 !important;
+    font-weight: 700 !important;
+}
+
+/* TABLES */
+body.light-mode .table-premium tbody tr {
+    background: rgba(255, 255, 255, 1) !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important;
+}
+body.light-mode .table-premium td {
+    color: #1e293b !important;
+    border-color: rgba(0,0,0,0.05) !important;
+}
+body.light-mode .table-premium tbody tr:hover {
+    background: rgba(248, 250, 252, 1) !important;
+}
+
+/* FORMS AND INPUTS */
+body.light-mode .form-control-dark {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+body.light-mode .form-control-dark:focus {
+    background-color: #ffffff !important;
+    border-color: #4f46e5 !important;
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.1) !important;
+}
+
+/* TIMELINE AND CHAT FEED */
+body.light-mode .timeline-node::before {
+    background: #ffffff !important;
+    border-color: #6366f1 !important;
+}
+body.light-mode .chat-container {
+    background: rgba(241, 245, 249, 0.6) !important;
+}
+body.light-mode .chat-bubble-admin {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+}
+body.light-mode .chat-bubble-user {
+    color: #ffffff !important; /* Keep user bubble text white */
+}
+
+/* INDEX PAGE SPECIFIC OVERRIDES */
+body.light-mode .premium-badge {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #6366f1 !important;
+}
+body.light-mode .btn-premium-outline {
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: #000000 !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
+body.light-mode .btn-premium-outline:hover {
+    background: rgba(0, 0, 0, 0.08) !important;
+    color: #000000 !important;
+}
+body.light-mode .team-glass {
+    background: rgba(0, 0, 0, 0.02) !important;
+    border-color: rgba(0, 0, 0, 0.05) !important;
+}
+body.light-mode .team-glass img {
+    filter: none !important; /* Clear images in light mode */
+}
+body.light-mode .gradient-divider {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent) !important;
+}
+body.light-mode .hero-glow {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(255,255,255,0) 70%) !important;
+}
+
+/* ALERTS */
+body.light-mode .alert-premium {
+    background: #ffffff !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+/* GRADIENTS TO SOLID BLACK OVERRIDE */
+body.light-mode .text-gradient,
+body.light-mode .text-gradient-alt {
+    background: none !important;
+    -webkit-text-fill-color: #000000 !important;
+    color: #000000 !important;
+}
+
+/* TOGGLE BUTTON STYLE */
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #ecc94b;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+body.light-mode .theme-toggle-btn {
+    border-color: rgba(0,0,0,0.1);
+    color: #475569;
+}
+.theme-toggle-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+body.light-mode .theme-toggle-btn:hover {
+    background: rgba(0,0,0,0.05);
+}

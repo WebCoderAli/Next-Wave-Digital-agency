@@ -1,0 +1,690 @@
+/* =========================================================
+   GLOBAL RESET & BASE
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   LINKS & TEXT
+========================================================= */
+a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+.text-muted {
+  color: #94a3b8 !important;
+}
+
+.text-secondary {
+  color: #94a3b8 !important;
+}
+
+.table-premium {
+  color: #f8fafc;
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+.navbar {
+  padding: 14px 0;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #ddd;
+  margin-left: 15px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn {
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 500;
+}
+
+.btn-dark {
+  background: linear-gradient(135deg, #212529, #343a40);
+  border: none;
+}
+
+.btn-dark:hover {
+  background: linear-gradient(135deg, #000, #212529);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #084298);
+  border: none;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
+  border: none;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #198754, #0f5132);
+  border: none;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+.card {
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  color: #f8fafc;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.card-img-top {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* =========================================================
+   FORMS
+========================================================= */
+.form-control {
+  border-radius: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: none;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+.table {
+  background-color: transparent !important;
+  color: inherit;
+}
+
+.table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+.badge {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+}
+
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
+.dashboard-card {
+  text-align: center;
+  padding: 25px;
+}
+
+.dashboard-card h2 {
+  font-size: 32px;
+  margin-top: 10px;
+}
+
+/* =========================================================
+   CHAT SYSTEM
+========================================================= */
+.chat-box {
+  height: 350px;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.chat-message {
+  margin-bottom: 15px;
+}
+
+.chat-message strong {
+  display: block;
+  font-size: 14px;
+}
+
+/* =========================================================
+   SERVICE & TEAM IMAGES
+========================================================= */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.team-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+footer {
+  background-color: #212529;
+  color: #ccc;
+  margin-top: 60px;
+}
+
+footer small {
+  font-size: 13px;
+}
+
+/* =========================================================
+   AUTH PAGES (LOGIN / REGISTER)
+========================================================= */
+.auth-card {
+  margin-top: 80px;
+}
+
+.auth-card h4 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+.shadow-sm {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+.rounded {
+  border-radius: 10px !important;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+}
+
+section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.5px;
+}
+
+p {
+  line-height: 1.7;
+}
+
+.card {
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.btn-lg {
+  padding: 12px 28px;
+  border-radius: 50px;
+}
+
+.card-img-top {
+  height: 280px;
+  object-fit: cover;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  color: #f8fafc;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.chat-box {
+  height: 420px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.chat-message {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 75%;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #212529, #343a40);
+}
+
+.admin-sidebar a {
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.admin-sidebar a:hover {
+  padding-left: 28px;
+}
+
+.admin-content {
+  background: transparent;
+  min-height: 100vh;
+}
+
+.dashboard-card {
+  border-radius: 14px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #f8fafc;
+}
+
+.table th {
+  font-weight: 600;
+  background: #f8f9fa;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .btn-lg {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 220px;
+  }
+
+  .price-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .chat-box {
+    height: 300px;
+    padding: 10px;
+  }
+
+  .chat-message {
+    max-width: 100%;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar h4 {
+    display: none;
+  }
+
+  .admin-sidebar a {
+    white-space: nowrap;
+    padding: 15px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .admin-content {
+    padding: 15px;
+  }
+}
+
+
+
+/* ================= FOOTER ================= */
+.footer {
+  background: #0f0f0f;
+  color: #bbb;
+  padding: 70px 0 30px;
+}
+
+.footer h5,
+.footer h6 {
+  color: #fff;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #0d6efd;
+}
+
+.footer hr {
+  border-color: #222;
+}
+/* ================= USER DASHBOARD ================= */
+
+.user-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #f8fafc;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card h6 {
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.stat-card h2 {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888;
+}
+
+/* Decorative circle */
+.stat-card::after {
+  content: "";
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(13, 110, 253, 0.1);
+  top: -40px;
+  right: -40px;
+}
+
+.stat-card.approved::after {
+  background: rgba(25, 135, 84, 0.15);
+}
+
+.stat-card.pending::after {
+  background: rgba(255, 193, 7, 0.2);
+}
+
+/* STATUS BADGES */
+.status-approved {
+  background: #198754;
+  color: #fff;
+}
+
+.status-pending {
+  background: #ffc107;
+  color: #000;
+}
+
+.status-rejected {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* TABLE */
+.table th {
+  font-weight: 600;
+  background: #f8f9fa;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .stat-card h2 {
+    font-size: 32px;
+  }
+}
+/* ================= INDEX PAGE (HERO) ================= */
+
+.hero-title {
+  animation: slideFade 1s ease forwards;
+}
+
+.hero-subtitle {
+  animation: slideFade 1.3s ease forwards;
+}
+
+.hero-image {
+  animation: floatHero 4s ease-in-out infinite;
+}
+
+/* CTA buttons spacing */
+.hero-buttons .btn {
+  margin-right: 10px;
+}
+
+/* Animations */
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatHero {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Responsive hero */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    text-align: center;
+  }
+
+  .hero-image {
+    margin-top: 30px;
+  }
+}
+
+/* =========================================================
+   PREMIUM GLASSMORPHISM COMPONENTS (DARK MODE BASE)
+========================================================= */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  color: #f8fafc;
+  transition: all 0.3s ease;
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+.table-premium {
+  color: #f8fafc !important;
+  width: 100%;
+}
+
+.table-premium th {
+  color: #94a3b8 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: transparent !important;
+}
+
+.table-premium td {
+  color: #f8fafc !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+  background: transparent !important;
+}
+
+.table-premium tr:hover td {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.form-control-dark {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f8fafc !important;
+  transition: all 0.3s ease;
+}
+
+.form-control-dark:focus {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* Ensure alerts look distinct in dark mode */
+.alert-premium {
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+}
