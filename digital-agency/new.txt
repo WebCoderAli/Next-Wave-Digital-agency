@@ -1,0 +1,97 @@
+🔹 Phase 1 – Core System (Foundation)
+
+/includes/config.php
+
+/includes/db.php
+
+/includes/auth.php
+
+/includes/header.php
+
+/includes/footer.php
+
+/index.php
+
+👉 Without these, nothing works.
+
+🔹 Phase 2 – Admin Authentication (Security)
+
+/admin/login.php
+
+/admin/logout.php
+
+/admin/forgot-password.php
+
+/admin/reset-password.php
+
+/admin/dashboard.php
+
+🔹 Phase 3 – Admin Services (CRUD)
+
+/admin/services/list.php
+
+/admin/services/add.php
+
+/admin/services/edit.php
+
+/admin/services/delete.php
+
+🔹 Phase 4 – Users Management
+
+/admin/users/list.php
+
+/admin/users/block.php
+
+🔹 Phase 5 – Orders & Payments
+
+/admin/orders/list.php
+
+/admin/orders/view.php
+
+/admin/orders/approve.php
+
+/admin/orders/reject.php
+
+🔹 Phase 6 – Chat System
+
+/admin/chat/inbox.php
+
+/admin/chat/send.php
+
+/user/chat/inbox.php
+
+🔹 Phase 7 – Team Section
+
+/admin/team/list.php
+
+/admin/team/add.php
+
+🔹 Phase 8 – User Side
+
+/user/register.php
+
+/user/login.php
+
+/user/logout.php
+
+/user/dashboard.php
+
+/user/services.php
+
+/user/order-service.php
+
+/user/my-orders.php
+
+/user/profile.php
+
+/user/change-password.php
+
+🔹 Phase 9 – Assets
+
+/assets/css/style.css
+
+/assets/js/main.js
+
+🔹 Phase 10 – Settings
+
+/admin/settings.php

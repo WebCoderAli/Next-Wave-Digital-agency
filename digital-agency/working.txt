@@ -1,0 +1,1192 @@
+Digital Agency Project Working Notes
+===================================
+
+Overview
+--------
+This project is a PHP + MySQL digital agency web application with:
+- Public marketing pages
+- User/client portal
+- Admin panel
+- Order management
+- Chat and negotiation flow
+- Offer and milestone payment support
+- File uploads for chat, payments, services, team, and progress
+
+
+Top-Level Folder Structure
+--------------------------
+
+about.php
+contact.php
+faq.php
+index.php
+portfolio.php
+pricing.php
+services.php
+README.md
+query.txt
+working.txt
+
+admin/
+    Admin panel pages for login, dashboard, orders, services, users, team, settings, and chat.
+
+assets/
+    Static frontend files.
+    css/
+        bootstrap.min.css
+        guest.css
+        style.css
+        theme-toggle.css
+        user-modern.css
+    js/
+        guest.js
+        main.js
+        theme.js
+    images/
+        Public images for hero, services, portfolio, team.
+
+database/
+    SQL schema file.
+
+includes/
+    Shared PHP logic and layouts.
+
+uploads/
+    Uploaded runtime files.
+    chat/
+    order-progress/
+    payments/
+    profiles/
+    services/
+    team/
+
+user/
+    Client portal pages.
+
+
+Main Shared Files
+-----------------
+
+includes/config.php
+- Defines database credentials and base URL.
+- Defines constants like:
+  - BASE_URL
+  - DB_HOST
+  - DB_USER
+  - DB_PASS
+  - DB_NAME
+  - ROOT_DIR
+  - UPLOAD_DIR
+  - ADMIN_SESSION
+  - USER_SESSION
+
+includes/db.php
+- Creates the MySQL connection in `$conn`.
+- Sets charset to utf8mb4.
+- Loads `includes/marketplace.php`.
+- Runs `ensureMarketplaceSchema($conn)` so missing tables/columns needed by the negotiation flow are created automatically.
+
+includes/auth.php
+- Session/auth helper functions.
+- Protects admin and user pages.
+- Used by most portal/admin pages.
+
+includes/header.php
+- Shared public/user header.
+- Loads CSS and navbar.
+- Changes navigation based on whether the user is logged in.
+
+includes/footer.php
+- Shared site footer and JS includes.
+- Note: client chat page now closes HTML directly and does not use this footer.
+
+includes/admin_sidebar.php
+- Shared admin layout/sidebar wrapper.
+- Used by admin pages.
+
+includes/marketplace.php
+- Schema helper for new marketplace/negotiation flow.
+- Ensures required columns/tables exist:
+  - `orders` extra pricing/offer fields
+  - `payments` extra amount/milestone fields
+  - `order_progress`
+  - `chats` structure updates
+- Also contains:
+  - `decodeMilestones()`
+  - `formatPaymentMode()`
+
+
+Public Website Files
+--------------------
+
+index.php
+- Main landing page.
+
+about.php
+- About page.
+
+services.php
+- Public services marketing page.
+
+pricing.php
+- Pricing page.
+
+portfolio.php
+- Portfolio page.
+
+contact.php
+- Contact page.
+
+faq.php
+- FAQ page.
+
+
+User Portal Files
+-----------------
+
+user/login.php
+- User login.
+
+user/register.php
+- User registration.
+
+user/logout.php
+- User logout.
+
+user/dashboard.php
+- User dashboard with quick links and stats.
+
+user/profile.php
+- User profile update page.
+
+user/change-password.php
+- User password change page.
+
+user/services.php
+- Lists active services available for clients.
+- CTA now points to request/negotiation flow.
+
+user/order-service.php
+- Client selects a service and starts a request.
+- Creates an `orders` row with:
+  - short_desc
+  - detailed_desc
+  - client_budget
+  - offer_status = waiting
+- Also creates the first chat message in `chats`.
+- Redirects user to `user/chat/inbox.php?order_id=...`
+
+user/my-orders.php
+- Lists client orders.
+- Shows status, offer info, and actions.
+- Can lead to:
+  - negotiation chat
+  - payment page
+  - order progress
+
+user/order-progress.php
+- Shows progress timeline for the selected order.
+- Reads `order_progress` entries and delivery files.
+
+user/pay-order.php
+- Used after the user accepts the admin offer.
+- Lets user upload payment proof.
+- Supports:
+  - full payment
+  - milestone payment
+- Stores records in `payments`.
+- Also posts a related chat message.
+
+user/chat/inbox.php
+- Client chat page.
+- Now rewritten to behave like admin chat.
+- Main responsibilities:
+  - select order conversation
+  - fetch chats by `order_id`
+  - send message + optional file
+  - accept offer
+  - reject offer
+  - send counter offer
+  - show order summary and milestone info
+  - show payment button after offer is accepted
+- Chat area uses a fixed-height scrollable container like admin chat.
+
+
+Admin Portal Files
+------------------
+
+admin/login.php
+- Admin login.
+
+admin/logout.php
+- Admin logout.
+
+admin/forgot-password.php
+- Admin forgot password flow.
+
+admin/reset-password.php
+- Admin reset password flow.
+
+admin/dashboard.php
+- Admin dashboard.
+
+admin/settings.php
+- Admin settings page.
+
+admin/test-hash.php
+- Utility/test file for password hashing.
+
+
+Admin Chat Files
+----------------
+
+admin/chat/inbox.php
+- Lists conversations for admin.
+- Current version groups chat by order conversation.
+- Each row opens chat for a specific order.
+
+admin/chat/send.php
+- Main admin chat page for a specific order.
+- Admin can:
+  - send plain messages
+  - send attachments
+  - send/update a custom full-price offer
+  - send/update a milestone offer
+- Updates these order fields:
+  - offered_price
+  - payment_mode
+  - milestone_plan
+  - offer_status
+- Also writes a chat message describing the offer.
+
+
+Admin Orders Files
+------------------
+
+admin/orders/list.php
+- List all orders for admin.
+- Shows client, service, status, and progress.
+- Includes quick links to view/chat/progress.
+
+admin/orders/view.php
+- View one order in detail.
+- Shows:
+  - user
+  - service
+  - descriptions
+  - negotiated offer
+  - milestones
+  - uploaded payments
+- Links into admin chat and order rejection.
+
+admin/orders/approve.php
+- Marks order approved.
+- Updates payment verification if relevant.
+- Legacy approval endpoint still exists.
+
+admin/orders/reject.php
+- Marks order rejected.
+
+admin/orders/add-progress.php
+- Admin adds progress updates to an order.
+- Can upload delivery/progress files.
+- Inserts into `order_progress`.
+- Updates `orders.progress_percent`.
+- Marks order completed when progress reaches 100.
+
+
+Admin Services Files
+--------------------
+
+admin/services/list.php
+- List services.
+
+admin/services/add.php
+- Add service.
+
+admin/services/edit.php
+- Edit service.
+
+admin/services/delete.php
+- Delete service.
+
+
+Admin Users Files
+-----------------
+
+admin/users/list.php
+- List users.
+
+admin/users/block.php
+- Block/unblock user behavior.
+
+
+Admin Team Files
+----------------
+
+admin/team/list.php
+- List team members.
+
+admin/team/add.php
+- Add team member.
+
+admin/team/edit.php
+- Edit team member.
+
+admin/team/delete.php
+- Delete team member.
+
+
+Database / SQL Files
+--------------------
+
+database/digital_agency.sql
+- Main schema definition file.
+
+digital_agency.sql
+- Another SQL dump/schema file.
+- Contains more live-like dump content.
+
+query.txt
+- Manual SQL migration notes for the negotiation/milestone flow.
+
+
+Main Database Tables
+--------------------
+
+users
+- Client accounts.
+
+admins
+- Admin accounts.
+
+services
+- Service catalog.
+
+orders
+- Main order/request table.
+- Important fields include:
+  - user_id
+  - service_id
+  - short_desc
+  - detailed_desc
+  - client_budget
+  - offered_price
+  - payment_mode
+  - offer_status
+  - milestone_plan
+  - status
+  - progress_percent
+  - completed_at
+
+payments
+- Payment proof uploads and payment records.
+- Important fields include:
+  - order_id
+  - amount
+  - milestone_name
+  - note
+  - screenshot
+  - verified
+
+chats
+- Stores order-based conversation messages.
+- Important fields include:
+  - order_id
+  - sender_id
+  - receiver_id
+  - sender_role
+  - message
+  - file
+  - created_at
+
+order_progress
+- Timeline/progress updates from admin to client.
+
+team
+- Team member data for public/admin use.
+
+
+Negotiation / Marketplace Flow
+------------------------------
+
+1. Client opens `user/services.php`
+2. Client clicks request button for a service
+3. `user/order-service.php` creates:
+   - order request
+   - first chat message
+4. Client continues conversation in `user/chat/inbox.php`
+5. Admin opens `admin/chat/send.php`
+6. Admin replies and can send:
+   - full payment offer
+   - milestone payment offer
+7. Client can:
+   - accept offer
+   - reject offer
+   - counter offer
+8. If accepted, client goes to `user/pay-order.php`
+9. Client uploads payment proof
+10. Admin reviews order/payment and continues work
+11. Admin updates progress from `admin/orders/add-progress.php`
+12. Client tracks progress in `user/order-progress.php`
+
+
+Uploads Usage
+-------------
+
+uploads/chat/
+- Chat attachments.
+
+uploads/payments/
+- Payment screenshots uploaded by clients.
+
+uploads/order-progress/
+- Delivery/progress files uploaded by admin.
+
+uploads/services/
+- Service images.
+
+uploads/team/
+- Team images.
+
+uploads/profiles/
+- User profile images.
+
+
+Frontend Styling / JS
+---------------------
+
+assets/css/style.css
+- General site styling.
+
+assets/css/guest.css
+- Public/guest-facing styling.
+
+assets/css/user-modern.css
+- User portal styling.
+
+assets/css/theme-toggle.css
+- Theme toggle styles.
+
+assets/js/theme.js
+- Theme switching logic.
+
+assets/js/guest.js
+- Shared frontend interactions.
+
+assets/js/main.js
+- Additional app JS.
+
+
+Important Notes
+---------------
+
+- `user/chat/inbox.php` was changed multiple times and now uses a simpler admin-style chat layout.
+- `includes/marketplace.php` auto-runs schema updates, so some SQL in `query.txt` may already be applied.
+- `working.txt` is documentation only; it does not affect app logic.
+- Some older/legacy order approval logic still exists alongside the newer negotiation flow.
+
+
+Current Important Feature Files Quick Map
+-----------------------------------------
+
+Authentication:
+- `admin/login.php`
+- `user/login.php`
+- `user/register.php`
+- `includes/auth.php`
+
+Config/DB:
+- `includes/config.php`
+- `includes/db.php`
+- `includes/marketplace.php`
+
+Client ordering:
+- `user/services.php`
+- `user/order-service.php`
+- `user/my-orders.php`
+- `user/pay-order.php`
+- `user/order-progress.php`
+
+Negotiation/chat:
+- `user/chat/inbox.php`
+- `admin/chat/inbox.php`
+- `admin/chat/send.php`
+
+Admin order work:
+- `admin/orders/list.php`
+- `admin/orders/view.php`
+- `admin/orders/add-progress.php`
+- `admin/orders/approve.php`
+- `admin/orders/reject.php`
+
+Services/team/users:
+- `admin/services/*`
+- `admin/team/*`
+- `admin/users/*`
+
+
+End of working notes.
+
+
+============================================================
+CODE PART DETAILS AND HOW THEY WORK
+============================================================
+
+1. `includes/config.php`
+------------------------
+
+Main code purpose:
+- Detect local vs live environment
+- Set constants used everywhere
+
+Important code behavior:
+- Checks `$_SERVER['HTTP_HOST']`
+  - if localhost / 127.0.0.1:
+    - uses local DB settings
+    - sets `BASE_URL` to `/digital-agency`
+  - otherwise:
+    - uses live hosting DB settings
+    - sets live `BASE_URL`
+
+Why it matters:
+- Every page depends on these constants for database connection, session names, upload paths, and links.
+
+
+2. `includes/db.php`
+--------------------
+
+Main code purpose:
+- Open MySQL connection
+- Make connection globally available as `$conn`
+- Load schema helper
+
+Important code behavior:
+- Calls `mysqli_connect(...)`
+- Stops execution with `die(...)` if database connection fails
+- Calls `mysqli_set_charset($conn, "utf8mb4")`
+- Requires `includes/marketplace.php`
+- Calls `ensureMarketplaceSchema($conn)`
+
+Why it matters:
+- This file is the bootstrap for almost all database-driven pages.
+- The negotiation/milestone feature depends on the schema auto-update call here.
+
+
+3. `includes/marketplace.php`
+-----------------------------
+
+Main code purpose:
+- Add missing schema pieces needed by the new marketplace flow
+- Provide helper functions for milestone formatting
+
+Main functions:
+
+`marketplaceTableExists(mysqli $conn, string $table): bool`
+- Checks if a table exists using `SHOW TABLES LIKE ...`
+
+`marketplaceColumnExists(mysqli $conn, string $table, string $column): bool`
+- Checks if a column exists using `SHOW COLUMNS ... LIKE ...`
+
+`marketplaceEnsureQuery(mysqli $conn, string $sql): void`
+- Runs raw SQL query
+
+`ensureMarketplaceSchema(mysqli $conn): void`
+- Uses a static `$done` flag so it only runs once per request
+- Checks for missing columns and tables, then adds them
+- Updates `orders`, `payments`, `chats`
+- Creates `order_progress` if missing
+
+`decodeMilestones(?string $milestoneJson): array`
+- Converts milestone JSON from database into PHP array
+
+`formatPaymentMode(?string $paymentMode): string`
+- Returns readable label:
+  - `Milestone payment`
+  - `Full payment`
+
+Why it matters:
+- This is the support layer for your Fiverr-style workflow.
+- It avoids manual DB edits when code runs on an older schema.
+
+
+4. `includes/auth.php`
+----------------------
+
+Main code purpose:
+- Start session
+- Protect routes
+- Redirect logged-in users
+
+Expected important functions:
+- `adminAuth()`
+  - blocks access if admin session is missing
+- `userAuth()`
+  - blocks access if user session is missing
+- `redirectIfAdmin()`
+  - redirects already logged-in admins away from login page
+- `redirectIfUser()`
+  - redirects already logged-in users away from login/register page
+
+Why it matters:
+- Every protected page depends on these functions for access control.
+
+
+5. `includes/header.php`
+------------------------
+
+Main code purpose:
+- Render navbar and include shared CSS
+
+Important code behavior:
+- Starts session if needed
+- Detects whether user is logged in
+- Builds different navigation for:
+  - guest
+  - logged-in user
+- Loads:
+  - Bootstrap
+  - Bootstrap Icons
+  - Google Fonts
+  - `assets/css/style.css`
+  - `assets/css/guest.css`
+  - `assets/css/user-modern.css`
+  - theme CSS/JS
+
+Why it matters:
+- Almost every public and user page uses this file.
+- Styling and navigation are centralized here.
+
+
+6. `user/order-service.php`
+---------------------------
+
+Main code purpose:
+- Start a client request for a selected service
+
+Step-by-step logic:
+- Requires DB and auth files
+- Calls `userAuth()`
+- Reads service ID from `$_GET['id']`
+- Loads the selected service from `services` table
+- Validates POST fields:
+  - `short_desc`
+  - `detailed_desc`
+  - `message`
+  - optional `client_budget`
+
+When form submits:
+- Inserts into `orders`:
+  - `user_id`
+  - `service_id`
+  - `short_desc`
+  - `detailed_desc`
+  - `client_budget`
+  - `offer_status = waiting`
+- Gets new order ID with `mysqli_insert_id($conn)`
+- Inserts first chat row into `chats`
+- Redirects to `user/chat/inbox.php?order_id=...&created=1`
+
+Why it matters:
+- This page replaced the old direct payment-first order flow.
+- It is now the entry point for negotiation.
+
+
+7. `user/chat/inbox.php`
+------------------------
+
+Main code purpose:
+- Let client talk to admin about a specific order
+- Handle offer actions
+
+Important variables:
+- `$selected_order_id`
+- `$orders`
+- `$selectedOrder`
+- `$messages`
+- `$milestones`
+- `$error`
+- `$success`
+
+Code flow:
+
+A. Initial order loading
+- Fetches all orders for the logged-in user
+- If no `order_id` is passed, picks the first order automatically
+
+B. POST handling
+- Reads:
+  - `message`
+  - `action`
+  - optional file upload
+- Validates selected order belongs to current user
+
+C. File upload logic
+- Stores uploaded file in `uploads/chat/`
+- Allows:
+  - jpg
+  - jpeg
+  - png
+  - zip
+
+D. Offer action logic
+- `accept_offer`
+  - sets `orders.status = approved`
+  - sets `orders.offer_status = accepted`
+  - creates chat message saying client accepted
+
+- `reject_offer`
+  - sets `orders.status = rejected`
+  - sets `orders.offer_status = rejected`
+  - creates chat message saying client rejected
+
+- `counter_offer`
+  - reads `counter_price`
+  - reads `counter_message`
+  - builds a text message like:
+    - `Counter offer $300.00: ...`
+  - updates:
+    - `offer_status = countered`
+    - `status = pending`
+
+E. Message insert
+- Inserts new message into `chats` table
+- Includes:
+  - `order_id`
+  - `sender_id`
+  - `sender_role = user`
+  - `message`
+  - `file`
+
+F. Render section
+- Shows order selector
+- Shows order summary / offer info
+- Shows message history
+- Shows offer action buttons when admin has sent an offer
+- Shows payment button if offer was accepted
+
+Why it matters:
+- This is the main user-side negotiation screen.
+
+
+8. `admin/chat/inbox.php`
+-------------------------
+
+Main code purpose:
+- Show admin all active conversations
+
+Code behavior:
+- Joins:
+  - `chats`
+  - `orders`
+  - `users`
+  - `services`
+- Groups messages by order
+- Shows latest order-based conversations
+- Opens `admin/chat/send.php?order_id=...`
+
+Why it matters:
+- Converts admin inbox from user-based chat to order-based chat.
+
+
+9. `admin/chat/send.php`
+------------------------
+
+Main code purpose:
+- Admin chat page for one order
+- Admin can send both normal messages and custom offers
+
+Important logic blocks:
+
+A. Order loading
+- Reads `order_id` from GET/POST
+- Loads:
+  - order data
+  - user name
+  - service title
+
+B. File upload
+- Saves attachment into `uploads/chat/`
+
+C. Offer builder
+- Triggered when `send_offer` exists in POST
+- Reads:
+  - `offer_price`
+  - `payment_mode`
+  - `milestone_title[]`
+  - `milestone_amount[]`
+
+D. Full-payment offer logic
+- If payment mode = `full`
+- stores price
+- clears or ignores milestone plan
+
+E. Milestone offer logic
+- Loops through milestone arrays
+- Builds milestone array like:
+  - title
+  - amount
+- Sums milestone amounts
+- Verifies milestone total equals full offer price
+- Converts milestones to JSON using `json_encode(...)`
+
+F. Update order
+- Updates:
+  - `offered_price`
+  - `payment_mode`
+  - `milestone_plan`
+  - `offer_status = offered`
+  - `status = pending`
+
+G. Offer message creation
+- Builds a readable chat message:
+  - `Admin sent a full payment offer for $...`
+  - or milestone version
+- Appends custom note/message if provided
+
+H. Chat insert
+- Inserts admin message into `chats`
+
+Why it matters:
+- This is the main admin-side negotiation engine.
+
+
+10. `user/pay-order.php`
+------------------------
+
+Main code purpose:
+- Let client upload payment proof after accepting offer
+
+Important code behavior:
+- Loads selected order and verifies it belongs to current user
+- Loads milestone plan using `decodeMilestones(...)`
+
+On submit:
+- Reads:
+  - `amount`
+  - `milestone_name`
+  - `note`
+  - payment screenshot
+- Validates file type:
+  - jpg
+  - jpeg
+  - png
+- Saves file to `uploads/payments/`
+- Inserts payment row into `payments`
+- Inserts related message into `chats`
+
+Why it matters:
+- This connects the accepted offer with actual payment proof.
+
+
+11. `user/my-orders.php`
+------------------------
+
+Main code purpose:
+- Show client all orders with current state
+
+Important code behavior:
+- Joins `orders` with `services`
+- Also reads paid amount using subquery on `payments`
+- Displays:
+  - service
+  - order reference
+  - status
+  - offer amount
+  - payment mode
+
+Action logic:
+- If rejected:
+  - open chat
+- If pending:
+  - open negotiation
+- If accepted:
+  - chat + pay button
+- Otherwise:
+  - view progress
+
+Why it matters:
+- This is the client’s main control panel for orders.
+
+
+12. `admin/orders/view.php`
+---------------------------
+
+Main code purpose:
+- Show admin all details for one order
+
+Important code behavior:
+- Loads:
+  - order
+  - user
+  - service
+  - price
+  - payment records
+  - milestone info
+
+Page sections:
+- Information card
+- Negotiated offer summary
+- Milestones
+- Payment proofs list
+- buttons for:
+  - open negotiation chat
+  - reject order
+
+Why it matters:
+- This page gives admin complete context about one order.
+
+
+13. `admin/orders/add-progress.php`
+----------------------------------
+
+Main code purpose:
+- Save progress updates for client
+
+Important code behavior:
+- Validates `order_id`
+- Reads:
+  - `progress_percent`
+  - `message`
+  - optional file
+
+Validation:
+- progress must be 0 to 100
+- message required
+- file required when progress = 100
+
+On save:
+- uploads file to `uploads/order-progress/`
+- inserts new row into `order_progress`
+- updates `orders.progress_percent`
+- when progress = 100:
+  - sets `orders.status = completed`
+  - sets `orders.completed_at = NOW()`
+
+Why it matters:
+- This drives the delivery timeline visible to clients.
+
+
+14. `user/order-progress.php`
+-----------------------------
+
+Main code purpose:
+- Show client the progress timeline for one order
+
+Important code behavior:
+- Verifies the order belongs to the logged-in user
+- Loads order + service info
+- Loads rows from `order_progress`
+- Displays each progress node:
+  - percent
+  - time
+  - message
+  - file/download if available
+
+Why it matters:
+- This is the read-only delivery/progress tracker for clients.
+
+
+15. `admin/orders/list.php`
+---------------------------
+
+Main code purpose:
+- Admin overview of all orders
+
+Important code behavior:
+- Joins:
+  - `orders`
+  - `users`
+  - `services`
+- Shows:
+  - client
+  - service
+  - progress
+  - status
+  - offer summary
+- Includes actions:
+  - view
+  - chat
+  - update progress
+
+Why it matters:
+- Central admin work queue for order management.
+
+
+16. `user/services.php`
+-----------------------
+
+Main code purpose:
+- Show clients all active services they can request
+
+Important code behavior:
+- Fetches all active services from DB
+- Shows:
+  - image
+  - title
+  - short description
+  - price
+- CTA links to:
+  - `order-service.php?id=SERVICE_ID`
+
+Why it matters:
+- This is where clients begin the negotiation journey.
+
+
+17. `admin/services/*`
+----------------------
+
+Purpose:
+- CRUD operations for service catalog
+
+Expected working:
+- `list.php`
+  - shows all services
+- `add.php`
+  - inserts new service into DB
+- `edit.php`
+  - updates service record
+- `delete.php`
+  - removes service
+
+Why it matters:
+- Services shown on public/user side come from here.
+
+
+18. `admin/team/*`
+------------------
+
+Purpose:
+- CRUD for team members used on public site/admin
+
+Typical working:
+- Add/edit/delete team data
+- Upload team images
+
+
+19. `admin/users/*`
+-------------------
+
+Purpose:
+- User management
+
+Typical working:
+- list all users
+- block or control access
+
+
+20. SQL / Migration Files
+-------------------------
+
+`database/digital_agency.sql`
+- Base schema structure for app
+
+`digital_agency.sql`
+- More complete SQL dump
+
+`query.txt`
+- Manual SQL instructions for the negotiation/milestone updates
+
+Why it matters:
+- These files are used for DB setup, migration, or understanding schema design.
+
+
+21. Upload Handling Logic Summary
+---------------------------------
+
+Chat uploads:
+- Stored in `uploads/chat/`
+- Used by:
+  - `user/chat/inbox.php`
+  - `admin/chat/send.php`
+
+Payment uploads:
+- Stored in `uploads/payments/`
+- Used by:
+  - `user/pay-order.php`
+
+Progress uploads:
+- Stored in `uploads/order-progress/`
+- Used by:
+  - `admin/orders/add-progress.php`
+
+Service images:
+- Stored in `uploads/services/`
+
+Team images:
+- Stored in `uploads/team/`
+
+Profile images:
+- Stored in `uploads/profiles/`
+
+
+22. Most Important Working Flow in Code Terms
+---------------------------------------------
+
+Client request creation:
+- `user/services.php`
+  -> `user/order-service.php`
+  -> insert into `orders`
+  -> insert into `chats`
+
+Admin offer creation:
+- `admin/chat/inbox.php`
+  -> `admin/chat/send.php`
+  -> update `orders`
+  -> insert offer message into `chats`
+
+Client response:
+- `user/chat/inbox.php`
+  -> update order offer state
+  -> insert response into `chats`
+
+Client payment:
+- `user/pay-order.php`
+  -> insert into `payments`
+  -> insert payment note into `chats`
+
+Admin delivery:
+- `admin/orders/add-progress.php`
+  -> insert into `order_progress`
+  -> update `orders.progress_percent`
+
+Client tracking:
+- `user/order-progress.php`
+  -> read `order_progress`
+
+
+23. Files Most Sensitive To Future Changes
+------------------------------------------
+
+If you change negotiation or order flow, the most important files are:
+- `includes/marketplace.php`
+- `user/order-service.php`
+- `user/chat/inbox.php`
+- `admin/chat/send.php`
+- `user/pay-order.php`
+- `user/my-orders.php`
+- `admin/orders/view.php`
+- `admin/orders/add-progress.php`
+
+Reason:
+- These files are tightly connected by order state, offer state, chat messages, and payment progress.
+
+
+24. Practical Warning
+---------------------
+
+Because this project is procedural PHP, many pages directly mix:
+- query logic
+- form handling
+- page rendering
+
+So when editing a feature:
+- first check POST handling
+- then DB queries
+- then redirects
+- then UI rendering
+
+This is important because one file often does everything in one place.
+
+
+End of code-part details.
