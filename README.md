@@ -1,4 +1,4 @@
-# 🌊 Next Wave - Digital Agency & Service Marketplace
+# Next Wave - Digital Agency & Service Marketplace
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.x-blue.svg)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/Database-MySQL-orange.svg)](https://www.mysql.com/)
