@@ -10,6 +10,7 @@ Next Wave is a comprehensive, full-stack digital agency platform designed to bri
 
 ## 🚀 Key Features
 
+
 ### 🏢 Public Front-End
 - **Modern & Responsive UI**: Sleek, high-performance design using modern CSS.
 - **Service Showcases**: Detailed pages for Web Development, App Development, UI/UX, and Digital Marketing.
