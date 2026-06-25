@@ -8,37 +8,37 @@ Next Wave is a comprehensive, full-stack digital agency platform designed to bri
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 
-### 🏢 Public Front-End
+###  Public Front-End
 - **Modern & Responsive UI**: Sleek, high-performance design using modern CSS.
 - **Service Showcases**: Detailed pages for Web Development, App Development, UI/UX, and Digital Marketing.
 - **Dynamic Portfolio**: Showcase past projects with elegant filtering.
 - **Contact & Inquiry**: Integrated forms for lead generation.
 - **Pricing Tables**: Transparent service packages for potential clients.
 
-### 👤 User (Client) Dashboard
+###  User (Client) Dashboard
 - **Service Ordering**: Browse a marketplace of services and place orders directly.
 - **Order Tracking**: Real-time progress bars and status updates for active projects.
 - **Secure Payments**: Integrated payment processing for orders.
 - **Real-time Chat**: Direct communication channel with the agency team.
 - **Profile Management**: Secure account settings and order history.
 
-### 🛡️ Admin Dashboard
+###  Admin Dashboard
 - **Order Management**: Oversee all client orders, update payment statuses, and track project milestones.
 - **User Management**: Manage registered clients and access levels.
 - **Service Control**: Add, edit, or remove services from the marketplace.
 - **Team Management**: Coordinate internal team members.
 - **Site Settings**: Centralized configuration for the entire platform.
 
-### ⚙️ Developer Features
+###  Developer Features
 - **Auto-Migrating Schema**: The system automatically detects missing database tables/columns and creates them on-the-fly, ensuring seamless updates without manual SQL execution.
 - **Modular Config**: Environment-aware configuration for easy transition between local development and production.
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technology |
 | :--- | :--- |
